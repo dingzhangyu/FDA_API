@@ -179,10 +179,10 @@ In my case, I didn’t apply for an API key since I don’t request a lot from t
 1. Before I went to https://open.fda.gov, I spent some time looking for APIs that are user-friendly and might be of public interest. I found a GitHub page of [public APIs](https://github.com/public-apis/public-apis/blob/master/README.md#health). It contains links to, I assume, more than 200 APIs. I tried some of them till I found the FDA API.
 2. Go to https://open.fda.gov and on the top right, select API basics in the API drop-down menu.
 3. On the left-hand side, there is a drop-down menu. [Click](https://open.fda.gov/apis/) on some of them to get a glimpse on the different APIs and functions.
-4. Now, check the menu of API Basics and go to the last one, Authentication, where you can apply for an API key, if needed. I didn’t apply for one because the current setting is already enough for my need.
-5. Before using APIs, let’s first check the list of Construct the Query to get familiar with the query parameters and syntax. It’s basically some terms, `+`, `=`, `:`, etc.
+4. Now, check the menu of API Basics and go to the last one, `Authentication`, where you can apply for an API key, if needed. I didn’t apply for one because the current setting is already enough for my need.
+5. Before using APIs, let’s first check the list of `Construct the Query` to get familiar with the query parameters and syntax. It’s basically some terms, `+`, `=`, `:`, etc.
 6. Now we are all set. Still in the drop-down menu on the left side, choose `Food API Endpoints` and select `Recall Enforcement Reports`.
 7. Spend some time on the example API queries and then just change the parameters into whatever you like, but make sure not to exceed the boundaries.
-8. Once finishing the query statement, what I do is to use Postman, an app that can test APIs, to run the query, and it returns in JSON format.
+8. Once finishing the query statement, what I do is to use [Postman](https://www.postman.com), an app that can test APIs, to run the query, and it returns in JSON format.
 9. Download the JSON file and save it.
 10. Try different types of parameters to make most of it.
