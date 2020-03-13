@@ -3,6 +3,23 @@ U.S. Food and Drug Administration provides almost 10 kinds of APIs that enable u
 
 In my case, I chose its Food Recall Enforcement Reports API, which returns data from the FDA Recall Enterprise System.
 
+
+## Before query:
+Before we dive into data, there are some API limitations that we need to be aware of, which is the key.
+
+* With no API key: 40 requests per minute, per IP address. 1000 requests per day, per IP address.
+* With an API key: 240 requests per minute, per key. 120000 requests per day, per key.
+
+In my case, I didn’t apply for an API key since I don’t request a lot from the website and the connection is already stable and speedy. Of course, you can apply for a key if necessary. Here is a detailed [guidance](https://open.fda.gov/apis/authentication/) on how to get an API key.
+
+### Using your API key
+
+Your API key should be passed to the API as the value of the api_key parameter. Include it before other parameters, such as the search parameter. For example:
+
+```
+https://api_basics.fda.gov/drug/event.json?api_key=yourAPIKeyHere&search=...
+```
+
 ## Query 1
 For the first query, I want to see how many recalls have been initiated in 2019 regarding milk-related food. Here is the query:
 
@@ -22,7 +39,7 @@ For the first query, I’ve set five parameters:
 
 * `Limit` means how many entries of result we want the query to return. Here we pick the top five companies in terms of number of recalls.
 
-Here’s the result:
+Here’s the [result](https://github.com/dingzhangyu/FDA_API/blob/master/milk_recall_response.json):
 ```
 "results": [
     {
@@ -64,7 +81,7 @@ https://api.fda.gov/food/enforcement.json?search=recalling_firm:"Wismettac+Asian
 
 After our finding from the first query, I want to dive more into the Wismettac Asian Foods. Therefore, I changed the search parameter to the name of the company and kept the time constraint. I set the result limit to 15 entries to avoid too-long result.
 
-Here is part of the result:
+Here is part of the [result](https://github.com/dingzhangyu/FDA_API/blob/master/Wismettac_Asian_Food.json):
 ```
 "results": {
       "skip": 0,
@@ -109,7 +126,7 @@ https://api.fda.gov/food/enforcement.json?search=reason_for_recall:"milk"+AND+re
 ```
 After the queries above, I found most of the recall reports are initiated by companies, voluntarily, which tempted me to look for some recalls mandated by FDA. Therefore, I changed the reason back to `milk`, time period from `2010 to 2019` and sorted by `types of recall`.
 
-Here comes the result:
+Here comes the [result](https://github.com/dingzhangyu/FDA_API/blob/master/type_of_recall.json):
 ```
 "results": [
     {
@@ -134,7 +151,7 @@ https://api.fda.gov/food/enforcement.json?search=reason_for_recall:"milk"+AND+re
 ```
 I tweaked the query parameter a little bit: instead of counting the number of FDA Mandated, I chose to search for the single case.
 
-Here’s the final answer:
+Here’s the final [answer](https://github.com/dingzhangyu/FDA_API/blob/master/Milk_Mandated.json):
 ```
 "results": [
     {
@@ -168,21 +185,3 @@ Here’s the final answer:
 ```
 
 There are many other usages of this API. Feel free to check this link to the official documentation that helps you get familiar with more parameters and syntax: https://open.fda.gov/apis/food/enforcement/
-
-## FDA API Limitation:
-* With no API key: 40 requests per minute, per IP address. 1000 requests per day, per IP address.
-* With an API key: 240 requests per minute, per key. 120000 requests per day, per key.
-
-In my case, I didn’t apply for an API key since I don’t request a lot from the website and the connection is already stable and speedy. Of course, you can apply for a key if necessary. Here is a detailed [guidance](https://open.fda.gov/apis/authentication/) on how to get an API key.
-
-## Process Log
-1. Before I went to https://open.fda.gov, I spent some time looking for APIs that are user-friendly and might be of public interest. I found a GitHub page of [public APIs](https://github.com/public-apis/public-apis/blob/master/README.md#health). It contains links to, I assume, more than 200 APIs. I tried some of them till I found the FDA API.
-2. Go to https://open.fda.gov and on the top right, select API basics in the API drop-down menu.
-3. On the left-hand side, there is a drop-down menu. [Click](https://open.fda.gov/apis/) on some of them to get a glimpse on the different APIs and functions.
-4. Now, check the menu of API Basics and go to the last one, `Authentication`, where you can apply for an API key, if needed. I didn’t apply for one because the current setting is already enough for my need.
-5. Before using APIs, let’s first check the list of `Construct the Query` to get familiar with the query parameters and syntax. It’s basically some terms, `+`, `=`, `:`, etc.
-6. Now we are all set. Still in the drop-down menu on the left side, choose `Food API Endpoints` and select `Recall Enforcement Reports`.
-7. Spend some time on the example API queries and then just change the parameters into whatever you like, but make sure not to exceed the boundaries.
-8. Once finishing the query statement, what I do is to use [Postman](https://www.postman.com), an app that can test APIs, to run the query, and it returns in JSON format.
-9. Download the JSON file and save it.
-10. Try different types of parameters to make most of it.
